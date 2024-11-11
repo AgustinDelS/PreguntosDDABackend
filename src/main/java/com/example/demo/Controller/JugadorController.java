@@ -22,17 +22,18 @@ public class JugadorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String Usuario, @RequestParam String Contraseña) {
-        if (jugadorService.verificarCredenciales(Usuario, Contraseña)) {
+    public ResponseEntity<?> login(@RequestParam String nombre, @RequestParam String contrasena) {
+        if (jugadorService.verificarCredenciales(nombre, contrasena)) {
             return ResponseEntity.ok("Inicio de sesión exitoso");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contraseña incorrectos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contrasena incorrectos");
         }
     }
 
     @PostMapping("/registrar")
     public ResponseEntity<String> registrarJugador(@RequestBody Jugador jugador) {
         if (jugadorService.jugadorExiste(jugador.getUsuario())) {
+
             return ResponseEntity.badRequest().body("El nombre ya está en uso");
         }
         jugadorService.registrarJugador(jugador);

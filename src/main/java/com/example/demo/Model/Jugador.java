@@ -12,12 +12,11 @@ public class Jugador {
     private String nombre;
 
     @Column(nullable = false)
-    private String contraseña;
+    private String contrasena;
 
-    public Jugador(String nombre, String contraseña) {
+    public Jugador(String nombre, String contrasena) {
         this.nombre = nombre;
-
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     public Long getId() {
@@ -32,16 +31,16 @@ public class Jugador {
         return nombre;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
 
-    public void setUsuario(String usuario) {
-        this.nombre = usuario;
+    public void setUsuario(String nombre) {
+        this.nombre = nombre;
     }
 }

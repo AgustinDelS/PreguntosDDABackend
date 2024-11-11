@@ -25,15 +25,15 @@ public class JugadorService {
         // Buscar el usuario en la base de datos usando el nombre
         Optional<Jugador> jugadorOpt = jugadorRepository.findByNombre(nombre);
 
-        // Verificar si el usuario existe y si la contraseña es correcta
+        // Verificar si el usuario existe y si la contrasena es correcta
         if (jugadorOpt.isPresent()) {
             Jugador jugador = jugadorOpt.get();
 
-            // Aquí podrías usar un método para comparar contraseñas encriptadas
-            return jugador.getContraseña().equals(contrasena);
+            // Aquí podrías usar un método para comparar contrasenas encriptadas
+            return jugador.getContrasena().equals(contrasena);
         }
 
-        return false; // Retorna false si el usuario no existe o si la contraseña es incorrecta
+        return false; // Retorna false si el usuario no existe o si la contrasena es incorrecta
     }
 
     public void registrarJugador(Jugador jugador) {
