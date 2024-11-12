@@ -22,11 +22,11 @@ public class JugadorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String nombre, @RequestParam String contrasena) {
+    public ResponseEntity<?> login(@RequestParam String nombre,@RequestParam String contrasena) {
         if (jugadorService.verificarCredenciales(nombre, contrasena)) {
-            return ResponseEntity.ok("Inicio de sesión exitoso");
+            return ResponseEntity.ok("exitoso");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario o contrasena incorrectos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login inválido");
         }
     }
 

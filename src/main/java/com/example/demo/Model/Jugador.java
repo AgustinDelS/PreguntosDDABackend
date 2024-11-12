@@ -19,6 +19,9 @@ public class Jugador {
         this.contrasena = contrasena;
     }
 
+    public Jugador() {
+    }
+
     public Long getId() {
         return id;
     }

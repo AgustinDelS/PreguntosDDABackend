@@ -23,8 +23,8 @@ public class JugadorService {
 
     public boolean verificarCredenciales(String nombre, String contrasena) {
         // Buscar el usuario en la base de datos usando el nombre
-        Optional<Jugador> jugadorOpt = jugadorRepository.findByNombre(nombre);
 
+        Optional<Jugador> jugadorOpt = jugadorRepository.findByNombre(nombre);
         // Verificar si el usuario existe y si la contrasena es correcta
         if (jugadorOpt.isPresent()) {
             Jugador jugador = jugadorOpt.get();
@@ -32,7 +32,6 @@ public class JugadorService {
             // Aquí podrías usar un método para comparar contrasenas encriptadas
             return jugador.getContrasena().equals(contrasena);
         }
-
         return false; // Retorna false si el usuario no existe o si la contrasena es incorrecta
     }
 
