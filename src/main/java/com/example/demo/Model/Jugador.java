@@ -2,6 +2,9 @@ package com.example.demo.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Jugador {
     @Id
@@ -14,9 +17,13 @@ public class Jugador {
     @Column(nullable = false)
     private String contrasena;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Pregunta> aciertos;
+
     public Jugador(String nombre, String contrasena) {
         this.nombre = nombre;
         this.contrasena = contrasena;
+        this.aciertos = new ArrayList<>();
     }
 
     public Jugador() {
@@ -30,7 +37,7 @@ public class Jugador {
         this.id = id;
     }
 
-    public String getUsuario() {
+    public String getNombre() {
         return nombre;
     }
 
@@ -42,8 +49,19 @@ public class Jugador {
         this.contrasena = contrasena;
     }
 
-
-    public void setUsuario(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public void agregarAcierto(Pregunta pregunta) {
+        this.aciertos.add(pregunta);
+    }
+
+    public void setAciertos(List<Pregunta> aciertos) {
+        this.aciertos = aciertos;
+    }
+
+    public List<Pregunta> getAciertos() {
+        return this.aciertos;
     }
 }

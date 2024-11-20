@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/jugadores")
 public class JugadorController {
@@ -22,21 +24,32 @@ public class JugadorController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String nombre,@RequestParam String contrasena) {
+    public ResponseEntity<?> login(@RequestParam String nombre, @RequestParam String contrasena) {
         if (jugadorService.verificarCredenciales(nombre, contrasena)) {
-            return ResponseEntity.ok("exitoso");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login inválido");
+            // Obtener el jugador por el nombre
+            Optional<Jugador> jugadorOpt = jugadorService.obtenerJugadorPorNombre(nombre);
+            if (jugadorOpt.isPresent()) {
+                Jugador jugadorLogeado = jugadorOpt.get();
+                return ResponseEntity.ok(jugadorLogeado); // Devuelve
+            }
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login inválido");
     }
+
 
     @PostMapping("/registrar")
-    public ResponseEntity<String> registrarJugador(@RequestBody Jugador jugador) {
-        if (jugadorService.jugadorExiste(jugador.getUsuario())) {
-
-            return ResponseEntity.badRequest().body("El nombre ya está en uso");
+    public ResponseEntity<Jugador> registrarJugador(@RequestParam String nombre, @RequestParam String contrasena) {
+        if (jugadorService.jugadorExiste(nombre)) {
+            // Devuelve un ResponseEntity con estado BAD_REQUEST y cuerpo vacío
+            return ResponseEntity.badRequest().build();
         }
+
+        // Crea y guarda el nuevo jugador
+        Jugador jugador = new Jugador(nombre, contrasena);
         jugadorService.registrarJugador(jugador);
-        return ResponseEntity.ok("Registro exitoso");
+
+        // Devuelve el jugador registrado con un estado 200
+        return ResponseEntity.ok(jugador);
     }
+
 }
