@@ -49,7 +49,8 @@ public class Jugador {
         this.contrasena = contrasena;
     }
 
-    public void setNombre(String nombre) {
+
+    public void setUsuario(String nombre) {
         this.nombre = nombre;
     }
 
