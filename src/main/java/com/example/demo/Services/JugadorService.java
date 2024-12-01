@@ -34,7 +34,9 @@ public class JugadorService {
         }
         return false; // Retorna false si el usuario no existe o si la contrasena es incorrecta
     }
-
+    public Jugador save(Jugador jugador) {
+        return jugadorRepository.save(jugador);
+    }
     public void registrarJugador(Jugador jugador) {
         jugadorRepository.save(jugador);
     }

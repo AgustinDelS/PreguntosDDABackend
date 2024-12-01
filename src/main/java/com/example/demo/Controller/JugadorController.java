@@ -38,18 +38,36 @@ public class JugadorController {
 
 
     @PostMapping("/registrar")
-    public ResponseEntity<Jugador> registrarJugador(@RequestParam String nombre, @RequestParam String contrasena) {
+    public ResponseEntity<Jugador> registrarJugador(@RequestParam String nombre, @RequestParam String contrasena, @RequestParam int puntajeMaximo) {
         if (jugadorService.jugadorExiste(nombre)) {
             // Devuelve un ResponseEntity con estado BAD_REQUEST y cuerpo vacío
             return ResponseEntity.badRequest().build();
         }
 
         // Crea y guarda el nuevo jugador
-        Jugador jugador = new Jugador(nombre, contrasena);
+        Jugador jugador = new Jugador(nombre, contrasena,puntajeMaximo);
         jugadorService.registrarJugador(jugador);
 
         // Devuelve el jugador registrado con un estado 200
         return ResponseEntity.ok(jugador);
     }
+
+    @PutMapping("/aciertos/{nombre}")
+    public ResponseEntity<String> actualizarAciertos(@PathVariable String nombre, @RequestParam int nuevosAciertos, @RequestParam int puntajeMaximo) {
+        Optional<Jugador> jugadorOpt = jugadorService.obtenerJugadorPorNombre(nombre);
+        if (jugadorOpt.isPresent()) {
+            Jugador jugador = jugadorOpt.get();
+            jugador.setCantidadAciertos(jugador.getCantidadAciertos() + nuevosAciertos);
+            jugador.setPartidasJugadas(jugador.getPartidasJugadas() + 1);
+            if (jugador.getPuntajeMaximo() < puntajeMaximo) {
+                jugador.setPuntajeMaximo(puntajeMaximo);
+            }
+            jugadorService.save(jugador);
+            return ResponseEntity.ok("Aciertos actualizados correctamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Jugador no encontrado.");
+        }
+    }
+
 
 }

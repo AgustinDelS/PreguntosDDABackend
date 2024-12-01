@@ -60,4 +60,6 @@ public class Pregunta {
     public void setRespuestasIncorrectas(List<String> respuestasIncorrectas) {
         this.respuestasIncorrectas = respuestasIncorrectas;
     }
+
+
 }

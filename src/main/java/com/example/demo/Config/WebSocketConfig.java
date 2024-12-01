@@ -15,13 +15,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic"); // Prefijo para mensajes salientes
-        registry.setApplicationDestinationPrefixes("/app"); // Prefijo para mensajes entrantes
+        registry.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/multiplayer") // Este es el endpoint que usará el frontend
-                .setAllowedOrigins("*")
+                .setAllowedOriginPatterns("*")
                 .withSockJS(); // Opcional si quieres soporte para navegadores más antiguos
     }
 }

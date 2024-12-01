@@ -14,7 +14,7 @@ public class PartidaService {
 
     public Partida crearPartida(Jugador host) {
         if (partidaActiva == null) { // Solo crea una partida si no existe una activa
-            partidaActiva = new Partida(UUID.randomUUID().toString(), host);
+            partidaActiva = new Partida(host);
         }
         return partidaActiva;
     }
